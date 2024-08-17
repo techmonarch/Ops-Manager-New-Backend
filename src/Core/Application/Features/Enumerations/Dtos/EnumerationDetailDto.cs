@@ -1,0 +1,40 @@
+﻿using OpsManagerAPI.Domain.Enums;
+
+namespace OpsManagerAPI.Application.Features.Enumerations.Dtos;
+
+public record EnumerationDetailDto(
+    string FirstName,
+    string LastName,
+    DefaultIdType? Id,
+    string AccountNumber,
+    string Tariff,
+    string Phone,
+    string Email,
+    string City,
+    string LGA,
+    string State,
+    string PropertyUse,
+    string MeterNumber,
+    DefaultIdType? DistributionTransformerId,
+    string ContactFirstName,
+    string MiddleName,
+    string ContactLastName,
+    string Gender,
+    string ContactPhone,
+    string? ContactEmail,
+    string Address,
+    string BuildingDescription,
+    string Landmark,
+    string BusinessType,
+    string PremiseType,
+    string ServiceBand,
+    decimal Longitude,
+    decimal Latitude,
+    string CustomerType,
+    string Status,
+    string AccountType,
+    DefaultIdType? TariffId,
+    DefaultIdType? ProposedTariffId,
+    bool IsMetered,
+    List<string> Images
+);

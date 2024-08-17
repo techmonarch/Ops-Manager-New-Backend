@@ -1,0 +1,11 @@
+global using Ardalis.Specification;
+global using FluentValidation;
+global using MediatR;
+global using OpsManagerAPI.Application.Common.Exceptions;
+global using OpsManagerAPI.Application.Common.FileStorage;
+global using OpsManagerAPI.Application.Common.Interfaces;
+global using OpsManagerAPI.Application.Common.Models;
+global using OpsManagerAPI.Application.Common.Persistence;
+global using OpsManagerAPI.Application.Common.Validation;
+global using OpsManagerAPI.Domain.Common;
+global using OpsManagerAPI.Domain.Common.Contracts;

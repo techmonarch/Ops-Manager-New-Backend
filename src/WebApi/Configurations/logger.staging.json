@@ -1,0 +1,7 @@
+{
+  "LoggerSettings": {
+    "AppName": "OpsManagerAPI",
+    "WriteToFile": false,
+    "StructuredConsoleLogging": true
+  }
+}

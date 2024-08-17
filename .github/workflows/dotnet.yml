@@ -1,0 +1,63 @@
+name: OpsManagerAPI
+
+on:
+  push:
+    branches: [ "master" ]
+  # pull_request:
+  #   branches: [ "master" ]
+jobs:
+  build:    
+    runs-on: [self-hosted]
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0.x'
+
+    - name: Build with dotnet
+      run: dotnet build src\WebApi\WebApi.csproj --configuration Release
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted]
+    
+    steps:
+    - name: Project publish
+      run: dotnet publish -c Release src\WebApi\WebApi.csproj -o ${{env.DOTNET_ROOT}}/OpsManagerAPI
+
+    - name: Deploy to IIS
+      shell: powershell
+      run: |
+        $commands = @"
+        if ((Get-WebSiteState -Name OpsManagerAPI).Value -eq "Started")
+        {
+            Stop-WebSite -Name OpsManagerAPI
+            echo "Stopped Website OpsManagerAPI"
+        }
+        if ((Get-WebAppPoolState -Name OpsManagerAPI).Value -eq "Started")
+        {
+            Stop-WebAppPool -Name OpsManagerAPI
+            echo "Stopped Application Pool OpsManagerAPI"
+        }
+        
+        Start-Sleep -s 15        
+        Copy-Item ${{env.DOTNET_ROOT}}/OpsManagerAPI/* C:\inetpub\wwwroot\OpsManagerAPI -Recurse -Force
+        
+        if ((Get-WebSiteState -Name OpsManagerAPI).Value -eq "Stopped")
+        {
+            Start-WebSite -Name OpsManagerAPI
+            echo "Started Website OpsManagerAPI"
+        }
+        if ((Get-WebAppPoolState -Name OpsManagerAPI).Value -eq "Stopped")
+        {
+            Start-WebAppPool -Name OpsManagerAPI
+            echo "Started Application Pool OpsManagerAPI"
+        }
+        
+        if ($lastexitcode -lt 8) { $global:lastexitcode = 0 }
+        "@
+
+        Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"$commands`"" -Verb RunAs -Wait

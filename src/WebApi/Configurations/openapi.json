@@ -1,0 +1,14 @@
+{
+  "SwaggerSettings": {
+    "ContactEmail": "monarchtechnologysolution@gmail.com",
+    "ContactName": "Monarch Technology LTD",
+    "ContactUrl": "https://monarch.ng/",
+    "Description": "Engine house for Dynamic Operation Management software for Electricity Distribution Companies",
+    "Enable": true,
+    "License": true,
+    "LicenseName": "MIT License",
+    "LicenseUrl": "https://github.com/DotTechResolve/OpsManagerAPI/blob/master/LICENSE",
+    "Title": "Ops Manager API",
+    "Version": "1.0.0"
+  }
+}
